@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage{nips06submit}
+%\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\title{COMPUTATIONAL INTELLIGENCE (CI-MAI) - 2016-2017\\
+Project proposal: Fuzzy Control System Design for Aircraft Landing}
+\author{\`Angela Nebot, Llu\'{\i}s A. Belanche}
+%{\small Master in Artificial Intelligence\\
+%Barcelona School of Computer Science\\ %(\emph{Facultat d'Inform\`atica})
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+  The goal of this project is to develop a simple automatic aircraft
+  landing system, in which the aircraft follows a desired landing
+  profile. To this end, you should design and develop a fuzzy control
+  system that allows an aircraft descend from altitude promptly
+  in a very soft manner, taking as state variables the height and the
+  vertical velocity of the aircraft. In order to perform the whole
+  system simulation, it is necessary that you model the behaviour of
+  the aircraft in a very simple way, following the movement equations
+  described in this document. The complete simulation should be done
+  under \texttt{Simulink}.
+\end{abstract}
+
+\section{Introduction}
+
+Most control situations are more complex than we can deal with from
+the mathematical modelling point of view. In this situation, a fuzzy
+control system can be developed, provided a body of knowledge about the
+control process exists, and it can be expressed into a number of fuzzy
+rules. Control applications are arguably the kinds of problems for which fuzzy
+logic has had the greatest success and acclaim. Many of the consumer
+products that we use today involve fuzzy control.
+
+In this project you will conduct a simulation of the final descent and
+landing approach of an aircraft. The desired downward velocity is
+proportional to the square of the height. Thus, at higher altitudes, a
+large downward velocity is desired. As the height (altitude)
+decreases, the desired downward velocity should get smaller and smaller. In
+the limit, as the height becomes vanishingly small, the downward
+velocity also goes to zero. In this way, the aircraft will descend
+from altitude promptly but will touch down very gently to avoid
+damage.
+
+The two state variables for this simulation will be the height above
+ground, {\em h}, and the vertical velocity of the aircraft, {\em
+  v}. The control output will be a force that, when applied to the
+aircraft, will alter its height, {\em h}, and velocity, {\em v}. The
+differential control equations are loosely derived as follows. Mass
+{\em m} moving with velocity {\em v} has momentum {\em p = mv}. If no
+external forces are applied, the mass will continue in the same
+direction at the same velocity, {\em v}. If a force {\em f} is applied
+over a time interval $\Delta t$, a change in velocity of
+$ \Delta v = f \Delta t/m$ will result. If we let $\Delta t = 1.0$ (s)
+and $m = 1.0 $ (lb s$^2$ ft$^{-1}$), we obtain $\Delta v = f$ (lb), or
+the change in velocity is proportional to the applied force.
+
+\noindent
+In difference notation, we get:
+
+$$v_{i+1} = v_i + f_i$$
+$$h_{i+1} = h_i + v_i \cdot \Delta t$$
+
+where $v_{i+1}$ is the new velocity, $v_i$ is the old velocity,
+$h_{i+1}$ is the new height, and $h_i$ is the old height. These two
+“control equations” define the new value of the state variables {\em
+  v} and {\em h} in response to control input and the previous state
+variable values.
+
+\section{Assumptions in a Fuzzy Control System Design}
+
+A number of assumptions are implicit in a fuzzy control system design. Five basic assumptions
+are commonly made whenever a fuzzy rule-based control policy is selected:
+
+\begin{enumerate}
+\item The plant is observable and controllable: state, input, and output variables are usually
+available for observation and measurement or computation.
+\item There exists a body of knowledge comprising a set of linguistic rules, engineering
+common sense, intuition, or a set of input--output measurements data from which
+rules can be extracted.
+\item A solution exists.
+\item The control engineer is looking for a “good enough” solution, not necessarily the
+optimum one.
+\item The controller will be designed within an acceptable range of precision.
+
+\end{enumerate}
+
+
+\section{Development of the Fuzzy Logic Controller System}
+
+You are asked to design a simple fuzzy controller and to implement, using \texttt{Simulink}, the close loop system. You can use the 
+basic aircraft behaviour equations decsribed above to define your plant. The main steps in designing a simple fuzzy control system are as follows:
+
+\begin{enumerate}
+\item Identify the variables (inputs, states, and outputs) of the plant.
+\item  Partition the universe of discourse or the interval spanned by each variable into a
+number of fuzzy subsets, assigning each a linguistic label (subsets include all the
+elements in the universe).
+\item Assign or determine a membership function for each fuzzy subset.
+\item Assign the fuzzy relationships between the inputs’ or states’ fuzzy subsets on the one
+hand and the outputs’ fuzzy subsets on the other hand, thus forming the rule-base.
+\item Choose appropriate scaling factors for the input and output variables in order to normalize
+the variables to the $[0, 1]$ or the $[-1, 1]$ interval.
+\item Fuzzify the inputs to the controller.
+\item Use fuzzy approximate reasoning to infer the output contributed from each rule.
+\item Aggregate the fuzzy outputs recommended by each rule.
+\item Apply defuzzification to form a crisp output.
+\end{enumerate}
+
+\end{document}

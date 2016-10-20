@@ -1,0 +1,89 @@
+\documentclass[anon]{CI}
+
+% The following packages will be automatically loaded:
+% amsmath, amssymb, natbib, graphicx, url, algorithm2e
+
+\title[My CI Project]{My beautiful CI Project}
+
+ % Use \Name{Author Name} to specify the name.
+ % If the surname contains spaces, enclose the surname
+ % in braces, e.g. \Name{John {Smith Jones}} similarly
+ % if the name has a "von" part, e.g \Name{Jane {de Winter}}.
+ % If the first letter in the forenames is a diacritic
+ % enclose the diacritic in braces, e.g. \Name{{\'E}louise Smith}
+
+ % Two authors with the same address
+  % \coltauthor{\Name{Author Name1} \Email{abc@sample.com}\and
+  %  \Name{Author Name2} \Email{xyz@sample.com}\\
+  %  \addr Address}
+
+ % Three or more authors with the same address:
+ % \coltauthor{\Name{Author Name1} \Email{an1@sample.com}\\
+ %  \Name{Author Name2} \Email{an2@sample.com}\\
+ %  \Name{Author Name3} \Email{an3@sample.com}\\
+ %  \addr Address}
+
+
+ % Authors with different addresses:
+ \author{\Name{Author Name1} \Email{abc@myemailaddress.com}\\
+ \addr Academic address (optional)
+ \AND
+ \Name{Author Name2} \Email{xyz@myemailaddress.com}\\
+ \addr Academic address (optional)
+ }
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a great project and therefore it has a concise abstract.
+\end{abstract}
+
+\begin{keywords}
+List of keywords
+\end{keywords}
+
+
+\section{Problem statement and goals}
+
+This is where the content of your paper starts. Remember:
+\begin{itemize}
+\item Limit the main text (without bibliography and appendices) to 10 pages.
+\item Include, either in the main text or the appendices, enough details to convince the lecturers of the project's merits.
+\item You should cite or give credit to all material that is not yours (including pictures, books, web pages, code, ...)
+\end{itemize}
+
+\section{Previous work}
+
+This is a very important part, because it puts your work in context.
+
+\section{The CI methods}
+
+Do not repeat well-known theory or formulas. Just mention which methods you use and why you choose them, and provide relevant citations.
+
+\section{Results and Discussion}
+
+The main part of the document.
+
+\section{Strengths and weaknesses}
+
+Be critic with your work ...
+
+\section{Conclusions and future work}
+
+The conclusions are not a mere repetition of the abstract. Basically, you should describe ``what you know now that you did \emph{not} before doing the work''. In addition, mention what would be natural follow-up lines of work.
+
+\section*{References}
+
+\bibliography{yourbibfile}
+
+
+\appendix
+
+\section{Proof of theoretical results} (if applicable)
+
+\section{Implementation details} (if applicable)
+
+
+\end{document}
