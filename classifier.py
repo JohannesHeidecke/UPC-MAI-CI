@@ -1,3 +1,20 @@
+"""
+Simple linear classifier from sklearn.
+
+To run:
+python2 classifier.py TEST_SET_FOLDER TRAIN_SET_FOLDER
+
+Example case for notMNIST:
+python2 classifier.py notMNIST_large notMNIST_small
+
+It will train a classifier and then predict 10 values. Modify train and test set as necessary.
+
+Note: run it either on python2 or python 3 but there are compatibility issues while reading pickles, so stick to python 2.
+
+
+"""
+
+
 import os
 import sys
 import numpy as np
