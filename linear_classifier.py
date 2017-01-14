@@ -115,7 +115,7 @@ y_test = test_labels[:n_train]
 
 #print(X_train.shape) #(data_size, 784)
 
-model = LogisticRegression(multi_class="multinomial", solver="lbfgs")
+model = LogisticRegression(multi_class="ovr", solver="liblinear")
 model.fit(X_train, y_train)
 
 y_pred = model.predict(x_test)
