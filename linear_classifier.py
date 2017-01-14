@@ -1,5 +1,4 @@
-from matplotlib.pyplot import plot as plt
-from matplotlib.pyplot import show, draw
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
@@ -94,23 +93,7 @@ def results(model, valid_dataset, valid_labels, train_dataset, train_labels):
     
     print ("Score: ", classification_report(y_pred, y_val, target_names=labels))    
     plt.pcolor(confusion_matrix(y_pred, y_val), cmap="Reds")
-    draw()
-    
-    n_vis = 10
-    n_cols = 5
-    n_rows = n_vis/ n_cols
-    idx = np.random.randint(valid_dataset.shape[0], size=n_vis)
-    X_vis = valid_dataset[idx].reshape(-1, valid_dataset.shape[1]*valid_dataset.shape[2])
-    y_vis = valid_labels[idx]
-    y_pred = model.predict(X_vis)
-    
-    fig, ax = plt.subplots(n_rows, n_cols, sharex=True, sharey=True, figsize=(n_rows, n_cols))
-    fig.set_size_inches(10*n_rows, 5*n_cols)
-    for i, axi in enumerate(ax.flatten()):
-        axi.pcolor(X_vis[i].reshape(valid_dataset.shape[1], valid_dataset.shape[2]), cmap="Blues")
-        axi.set_title("True: %s, Predicted: %s" % (labels[y_vis[i]], labels[y_pred[i]]))
-    draw()
-    show()
+    plt.show()    
     return
 
 train_folders, test_folders = get_folder_names()
@@ -150,3 +133,20 @@ model = LogisticRegression(multi_class="multinomial", solver="lbfgs")
 print(model.fit(X_train, y_train))
 
 results(model, valid_dataset, valid_labels, train_dataset, train_labels)
+
+
+labels = ['6', '8']
+n_vis = 10
+n_cols = 5
+n_rows = n_vis/ n_cols
+idx = np.random.randint(valid_dataset.shape[0], size=n_vis)
+X_vis = valid_dataset[idx].reshape(-1, valid_dataset.shape[1]*valid_dataset.shape[2])
+y_vis = valid_labels[idx]
+y_pred = model.predict(X_vis)
+
+fig, ax = plt.subplots(n_rows, n_cols, sharex=True, sharey=True, figsize=(n_rows, n_cols))
+fig.set_size_inches(10*n_rows, 5*n_cols)
+for i, axi in enumerate(ax.flatten()):
+    axi.pcolor(X_vis[i].reshape(valid_dataset.shape[1], valid_dataset.shape[2]), cmap="Blues")
+    axi.set_title("True: %s, Predicted: %s" % (labels[y_vis[i]], labels[y_pred[i]]))
+plt.show()
