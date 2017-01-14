@@ -12,6 +12,7 @@ pixel_depth = 255.0
 def get_folder_names():
     """
     Return the list of directories inside training and testing directories.
+    ex: this one returns [path_to_training/6,path_to_training/8] and [path_to_test/6, path_to_test/8]
     """
     
     arguments = sys.argv
@@ -29,27 +30,39 @@ def get_folder_names():
 
 
 def load(folders, min_images, max_images):
+    """
+    Load images from the list of folders returned by get_folder_names() above
+    """
     
     dataset = np.ndarray(shape = (max_images, image_size, image_size), dtype=np.float32)
-    
+    #dataset is the actual data from the images, of the dimension [max_images, 28, 28]
+        
     labels = np.ndarray(shape = (max_images), dtype = np.int32)
+    #labels stores the labels of the images here, 0 or 1 for 6 and 8
+    
     label_index = 0
     image_index = 0
     
     for folder in folders:
         print (folder)
         print ('Number of Images found: ',len(os.listdir(folder)))
+        
         for image in os.listdir(folder):
+            #for every image in a particular folder eg: test/6
+            
             if image_index > max_images:
                 raise Exception("more images than expected: %d >= %d"%(image_index, max_images))
             image_file = os.path.join(folder, image)
+            
             try:
                 image_data = ndimage.imread(image_file).astype(float)
                 image_data = image_data[:,:,1]
                 image_data = (image_data - pixel_depth)/pixel_depth
+                #normalize the image
                 
                 if image_data.shape != (image_size, image_size):
                     raise Exception('Unexpected Image size: %s'%str(image_data.shape))
+                    #image not in the format 28x28
                 
                 dataset[image_index,:,:] = image_data
                 labels[image_index] = label_index
@@ -60,7 +73,8 @@ def load(folders, min_images, max_images):
             
         label_index += 1
     num_images = image_index
-    
+
+    #resize the dataset to only store the proper number of images
     dataset = dataset[0:num_images,:,:]
     labels = labels[0:num_images]
     
@@ -106,7 +120,7 @@ test_dataset, test_labels = load(test_folders, 100, 2500)
 train_dataset, train_labels = randomize(train_dataset, train_labels)
 test_dataset, test_labels = randomize(test_dataset, test_labels)
 
-
+"""
 train_size = 2000
 valid_size = 300
 
@@ -116,11 +130,7 @@ train_dataset = train_dataset[valid_size:valid_size+train_size,:,:]
 train_labels = train_labels[valid_size:valid_size+train_size]
 print ('Training', train_dataset.shape, train_labels.shape)
 print ('Validation', valid_dataset.shape, valid_labels.shape)
-
-#print(train_labels[11])
-#plt.imshow(train_dataset[np.random.randint(train_dataset.shape[0])])
-#plt.imshow(train_dataset[11])
-#plt.show()
+"""
 
 #convert 3D array into 2D array (vector of vectors or tensors)
 n_train = -1
