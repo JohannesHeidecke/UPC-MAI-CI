@@ -4,7 +4,7 @@ import os
 import sys
 from scipy import ndimage
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, precision_recall_fscore_support, classification_report
+from sklearn.metrics import confusion_matrix
 
 image_size = 28
 pixel_depth = 255.0
@@ -68,7 +68,7 @@ def load(folders, min_images, max_images):
     #normalize the dataset
     dataset = np.fabs(dataset) #absolute values
     a_max = np.amax(dataset) #get max
-    dataset = dataset/a_max #divide
+    dataset = (dataset - np.mean(dataset))/np.std(dataset) #divide
     
     if num_images < min_images:
         raise Exception('Fewer images than expected: %d <= %d'%(num_images, min_images))
@@ -106,16 +106,15 @@ train_dataset, train_labels = randomize(train_dataset, train_labels)
 test_dataset, test_labels = randomize(test_dataset, test_labels)
 
 #convert 3D array into 2D array (vector of vectors or tensors)
-n_train = -1
-X_train = train_dataset[:n_train].reshape(-1, train_dataset.shape[1]*train_dataset.shape[2])
-y_train = train_labels[:n_train]
+X_train = train_dataset.reshape(-1, train_dataset.shape[1]*train_dataset.shape[2])
+y_train = train_labels
 
-x_test = test_dataset[:n_train].reshape(-1, test_dataset.shape[1]*test_dataset.shape[2])
-y_test = test_labels[:n_train]
+x_test = test_dataset.reshape(-1, test_dataset.shape[1]*test_dataset.shape[2])
+y_test = test_labels
 
 #print(X_train.shape) #(data_size, 784)
 
-model = LogisticRegression(multi_class="ovr", solver="liblinear")
+model = LogisticRegression(multi_class="ovr", solver="liblinear", n_jobs=-1)
 model.fit(X_train, y_train)
 
 y_pred = model.predict(x_test)
@@ -128,3 +127,6 @@ TP = CM[1][1]
 FP = CM[0][1]
 
 print ("True Positive: %d True Negative %d False Postive %d False Negative %d"%(TP, TN, FP, FN))
+
+
+print(model.score(x_test, y_test)*100 ,"%")
