@@ -4,7 +4,7 @@ import os
 import sys
 from scipy import ndimage
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, precision_recall_fscore_support, classification_report
+from sklearn.metrics import confusion_matrix
 
 image_size = 28
 pixel_depth = 255.0
