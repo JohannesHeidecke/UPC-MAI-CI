@@ -1,0 +1,77 @@
+
+<img id='im1' src='training/6/test_0.png' width=140/>
+<img id='im2' src='training/8/test_0.png' width=140/>
+
+<br />
+<p id='output'>
+Which image looks like it's an original, written by a human? <br />Press 1 for the left image and 2 for the right image. When done, press s.
+</p>
+<p id='progress'>
+</p>
+
+<script>
+
+/* */
+/* IMPORTANT: change D and K to the desired values: */
+/* */
+D = 6
+K = 5120
+/* */
+/* */
+/* */
+
+counterCorrect = 0;
+counterIncorrect = 0;
+showNewImages = function() {
+	// select which image to show the original
+	if (Math.random() < 0.5) {
+		original = 'im1';
+		generated = 'im2';
+	} else {
+		original = 'im2';
+		generated = 'im1';
+	}
+	// construct the path to folder of random iteration:
+	id = Math.floor(Math.random() * 10) + 1;
+	folder = 'samples/' + D + '_' + K + '_' + id + '/'
+	// select a random original image:
+	id = Math.floor(Math.random() * K);
+	document.getElementById(original).src = folder + 'original_' + id + '.png'
+	document.getElementById(original).original = 1
+	// select a random generated image:
+	id = Math.floor(Math.random() * 10000);
+	document.getElementById(generated).src = folder + 'generated_' + id + '.png'
+	document.getElementById(generated).original = 0
+
+}
+
+showNewImages()
+
+document.onkeydown = function(event) {
+	key = event.which;
+	console.log(key)
+	chosen = false;
+	if (key == 83 || ((counterCorrect + counterIncorrect)) == 100) {
+		output = document.getElementById('output');
+		message = 'd:' + D + '|k:' + K + '|classified:' 
+		+ (counterCorrect + counterIncorrect)	+ '|accuracy:' + (counterCorrect / (counterCorrect + counterIncorrect));;
+		output.textContent = message;
+	} else if (key == 49) {		
+		chosen = 1;
+	} else if (key == 50) {
+		chosen = 2;
+	}
+	if (chosen != false) {
+		document.getElementById('progress').textContent = (counterCorrect + counterIncorrect) + 1;
+		console.log('chosen image ' + chosen);
+		correct = document.getElementById('im' + chosen).original == 1;
+		if (correct) {
+			counterCorrect++;
+		} else {
+			counterIncorrect++;
+		}
+		console.log(counterCorrect / (counterCorrect + counterIncorrect) * 100)
+		showNewImages();
+	}
+}
+</script>
