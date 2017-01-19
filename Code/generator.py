@@ -1,10 +1,15 @@
 import os
 
+# Define the parameters of the generator:
+# Train networks based on k number of orignals:
 ks = [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120]
+# Train for the following digits:
 ds = [6, 8]
+# Train this amount of different networks for each combination of k and d:
 iterations = 10
 
 
+# Construct the python command and let the OS execute it:
 for i in range(1, (iterations+1)):
 	for k in ks:
 		for d in ds:
